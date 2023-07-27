@@ -1,38 +1,37 @@
-"use client";
+'use client'
 
-import React from "react";
-import { useSession, signIn, signOut, getProviders } from "next-auth/react";
-import Link from "next/link";
-import Image from "next/image";
-import { Fade as Hamburger } from "hamburger-react";
+import { Fade as Hamburger } from 'hamburger-react'
+import { getProviders, signOut, useSession } from 'next-auth/react'
+import Image from 'next/image'
+import Link from 'next/link'
+import { useEffect, useState } from 'react'
 
 export default function Navbar({ fixed }) {
-  const [navbarOpen, setNavbarOpen] = React.useState(false);
-  const [providers, setProviders] = React.useState([]);
-  const [toggleProfileDropDown, setToggleProfileDropDown] =
-    React.useState(false);
+  const [navbarOpen, setNavbarOpen] = useState(false)
+  const [providers, setProviders] = useState([])
+  const [toggleProfileDropDown, setToggleProfileDropDown] = useState(false)
   const toggleNavbar = () => {
-    setNavbarOpen((state) => !state);
-  };
-  const { data: session } = useSession();
+    setNavbarOpen((state) => !state)
+  }
+  const { data: session } = useSession()
 
-  React.useEffect(() => {
+  useEffect(() => {
     const getProvidersData = async () => {
-      const providersData = await getProviders();
-      setProviders(providersData);
-    };
-    getProvidersData();
-  }, []);
+      const providersData = await getProviders()
+      setProviders(providersData)
+    }
+    getProvidersData()
+  }, [])
 
   return (
-    <nav className="relative flex flex-wrap items-center justify-between px-2 py-3 mb-3 bg-blue-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 sticky">
+    <nav className="flex flex-wrap items-center justify-between px-2 py-3 mb-3 bg-blue-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 sticky">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-space-evenly">
         <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           <Link
             className="text-sm font-bold leading-relaxed inline-block mr-4 my-auto whitespace-nowrap uppercase text-white"
             href="/"
           >
-           home
+            home
           </Link>
           <div className="text-white cursor-pointer text-xl leading-none px-3 border border-solid border-transparent rounded bg-transparent block lg:hidden outline-none focus:outline-none">
             <Hamburger size={20} color="white" onToggle={toggleNavbar} />
@@ -40,8 +39,8 @@ export default function Navbar({ fixed }) {
         </div>
         <div
           className={
-            "lg:flex flex-grow items-center" +
-            (navbarOpen ? " flex" : " hidden")
+            'lg:flex flex-grow items-center' +
+            (navbarOpen ? ' flex' : ' hidden')
           }
           id="example-navbar-danger"
         >
@@ -109,7 +108,7 @@ export default function Navbar({ fixed }) {
                         {provider.name}
                       </button>
                     ))} */}
-                    <Link href="/api/auth/signin">Login</Link>
+                  <Link href="/api/auth/signin">Login</Link>
                 </li>
                 <li className="nav-item">
                   <Link
@@ -125,5 +124,5 @@ export default function Navbar({ fixed }) {
         </div>
       </div>
     </nav>
-  );
+  )
 }
