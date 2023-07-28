@@ -1,6 +1,8 @@
 'use client'
 import AutoForm, { AutoFormSubmit } from '@/components/ui/auto-form'
 import * as z from 'zod'
+import Image from 'next/image'
+import Link from 'next/link'
 import Api from '@/utils/api'
 // Define your form schema using zod
 const parentAccountSchema = z.object({
@@ -23,6 +25,9 @@ const parentAccountSchema = z.object({
 export default function App() {
   return (
     <>
+      <Image src="/public/assets/images/piggy-logo.png" className="aspect-video"width={250} height={250}/>
+      <h1 className="text-Secondary/Grey-2 text-xl">Sign In</h1>
+      <h3 className="text-Secondary/Grey-2 text-md">Sign In Into Your Account</h3>
       <AutoForm
         onSubmit={async(data) => {
           try{
@@ -103,7 +108,7 @@ export default function App() {
           },
         }}
       >
-        <button type="submit">Send now</button>
+        <button type="submit" className="signIn">Sign In</button>
         <p className="text-gray-500 text-sm">
           By submitting this form, you agree to our{' '}
           <a href="#" className="text-primary underline">
@@ -112,6 +117,7 @@ export default function App() {
           .
         </p>
       </AutoForm>
+      <p>Belum punya akun? <Link href='/register'>Daftar Disini</Link></p>
     </>
   )
 }

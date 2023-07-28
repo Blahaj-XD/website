@@ -1,5 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@100;200;300;400;500;600;700;800;900&display=swap");
-
+@import url('https://fonts.cdnfonts.com/css/satoshi');
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -11,6 +11,7 @@
   scroll-behavior: smooth;
 }
 .main {
+  font-family: 'Satoshi', sans-serif;
   width: 100vw;
   min-height: 100vh;
   position: fixed;
@@ -31,4 +32,15 @@
   border-style: solid;
   border-color: #d1d5db;
   color:black;
+}
+
+@layer utilities{
+  .signIn {
+    @apply bg-Shade-Pinkl px-5 py-2 text-white font-bold; /* Fixed the class name, removed the "l" in "Pinkl" */
+  }
+
+  /* Fixed hover style */
+  .signIn:hover {
+    @apply bg-Primary-Dark-Pink px-5 py-2 text-white font-bold; /* Fixed the class name, replaced "/" with "-" */
+  }
 }
