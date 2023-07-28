@@ -1,5 +1,3 @@
-import Footer from '@components/footer'
-import Navbar from '@components/navbar'
 
 import '@styles/globals.css'
 
@@ -15,9 +13,7 @@ export default function RootLayout({ children }) {
         <link rel="icon" href="/assets/images/website-icon.svg" />
       </head>
       <body className="w-screen mx-auto overflow-x-hidden">
-          <Navbar className="bg-[#0000]"/>
           {children}
-          <Footer />
       </body>
     </html>
   )

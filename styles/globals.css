@@ -36,11 +36,11 @@
 
 @layer utilities{
   .signIn {
-    @apply bg-Shade-Pinkl px-5 py-2 text-white font-bold; /* Fixed the class name, removed the "l" in "Pinkl" */
+    @apply bg-Shade-Pinkl px-5 py-2 text-white font-bold w-full; /* Fixed the class name, removed the "l" in "Pinkl" */
   }
 
   /* Fixed hover style */
   .signIn:hover {
-    @apply bg-Primary-Dark-Pink px-5 py-2 text-white font-bold; /* Fixed the class name, replaced "/" with "-" */
+    @apply bg-Primary-Dark-Pink px-5 py-2 text-white font-bold w-full; /* Fixed the class name, replaced "/" with "-" */
   }
 }
