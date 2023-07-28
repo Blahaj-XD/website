@@ -1,6 +1,6 @@
 import Footer from '@components/footer'
 import Navbar from '@components/navbar'
-import SessionProvider from '@components/session-provider'
+
 import '@styles/globals.css'
 
 export const metadata = {
@@ -10,17 +10,14 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="en">
-      {/* <body className={inter.className}>{children}</body> */}
+    <html lang="id">
       <head>
         <link rel="icon" href="/assets/images/website-icon.svg" />
       </head>
-      <body className="w-screen mx-auto overflow-x-hidden bg-[#0F172A]">
-        <SessionProvider>
-          <Navbar />
+      <body className="w-screen mx-auto overflow-x-hidden">
+          <Navbar className="bg-[#0000]"/>
           {children}
           <Footer />
-        </SessionProvider>
       </body>
     </html>
   )

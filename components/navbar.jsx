@@ -8,23 +8,15 @@ import { useEffect, useState } from 'react'
 
 export default function Navbar({ fixed }) {
   const [navbarOpen, setNavbarOpen] = useState(false)
-  const [providers, setProviders] = useState([])
   const [toggleProfileDropDown, setToggleProfileDropDown] = useState(false)
   const toggleNavbar = () => {
     setNavbarOpen((state) => !state)
   }
-  const { data: session } = useSession()
-
-  useEffect(() => {
-    const getProvidersData = async () => {
-      const providersData = await getProviders()
-      setProviders(providersData)
-    }
-    getProvidersData()
-  }, [])
-
+  const session = {
+    user: undefined
+  }
   return (
-    <nav className="flex flex-wrap items-center justify-between px-2 py-3 mb-3 bg-blue-400 bg-clip-padding backdrop-filter backdrop-blur-sm bg-opacity-10 border border-gray-100 sticky">
+    <nav className="flex flex-wrap items-center justify-between px-2 py-3 mb-3 bg-black border border-gray-100 sticky">
       <div className="container px-4 mx-auto flex flex-wrap items-center justify-space-evenly">
         <div className="w-full relative flex justify-between lg:w-auto lg:static lg:block lg:justify-start">
           <Link
@@ -50,7 +42,7 @@ export default function Navbar({ fixed }) {
                 <li className="nav-item my-auto">
                   <Link
                     className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                    href="/navigation/dashboard"
+                    href="/dashboard"
                   >
                     Dashboard
                   </Link>
@@ -58,7 +50,7 @@ export default function Navbar({ fixed }) {
                 <li className="nav-item my-auto">
                   <Link
                     className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white hover:opacity-75"
-                    href="/navigation/courses"
+                    href="/courses"
                   >
                     Courses
                   </Link>
@@ -94,20 +86,6 @@ export default function Navbar({ fixed }) {
             ) : (
               <>
                 <li className="px-3 py-2 flex items-center text-xs uppercase font-bold leading-snug text-white">
-                  {/* {providers &&
-                    Object.values(providers).map((provider) => (
-                      <button
-                        type="button"
-                        class="mx-5 hover:opacity-75"
-                        key={provider.name}
-                        onClick={() => {
-                          signIn(provider.id);
-                        }}
-                        className="black_btn uppercase"
-                      >
-                        {provider.name}
-                      </button>
-                    ))} */}
                   <Link href="/api/auth/signin">Login</Link>
                 </li>
                 <li className="nav-item">
