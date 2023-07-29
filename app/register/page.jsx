@@ -147,13 +147,25 @@ const ScanKTP = ({ configureNextAction, page, className }) => {
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none">
           {!fileUploaded ? (
             <div>
-              <Image src="/assets/icons/ktpIcon.svg" width={42} height={32} alt="ktp" className="mx-auto" />
-              <h4 className="whitespace-nowrap text-sm text-center">Unggah Foto KTP Anda Disini</h4>
-              <h6 className="whitespace-nowrap text-2xs text-center">Maksimal ukuran file 10MB</h6>
+              <Image
+                src="/assets/icons/ktp.svg"
+                width={42}
+                height={32}
+                alt="ktp"
+                className="mx-auto"
+              />
+              <h4 className="whitespace-nowrap text-sm text-center">
+                Unggah Foto KTP Anda Disini
+              </h4>
+              <h6 className="whitespace-nowrap text-2xs text-center">
+                Maksimal ukuran file 10MB
+              </h6>
             </div>
           ) : (
             <div>
-              <h4 className="whitespace-nowrap font-bold">Foto berhasil diunggah</h4>
+              <h4 className="whitespace-nowrap font-bold">
+                Foto berhasil diunggah
+              </h4>
             </div>
           )}
         </div>
@@ -167,10 +179,39 @@ const ScanKTP = ({ configureNextAction, page, className }) => {
   )
 }
 
+import PinInput from 'react-pin-input';
+const Pin = ({ className, length, page, configureNextAction }) => {
+  const value = React.useRef('')
+  return (
+    <div className={className}>
+      <h1>Silahkan buat pin untuk rekening anda</h1>
+      <p>Tolong Masukan pin</p>
+      <div className="container">
+        <PinInput
+          length={length}
+          initialValue=""
+          secret
+          secretDelay={100}
+          onChange={(value, index) => {}}
+          type="numeric"
+          inputMode="number"
+          style={{padding: '5px'}}
+          inputStyle={{borderColor: 'red'}}
+          inputFocusStyle={{borderColor: 'blue'}}
+          onComplete={(value, index) => value.currentValue}
+          autoSelect={true}
+          regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
+        />
+        <button onClick={configureNextAction(page,value)} className="signIn">Daftar Sekarang</button>
+      </div>
+    </div>
+  );
+};
+
 export default function App() {
   const [page, setPage] = React.useState(0)
   const [formData, setFormData] = React.useState({})
-  const MAX_PAGE = 3
+  const MAX_PAGE = 4
   const MIN_PAGE = 0
   React.useEffect(() => {
     console.log(page)
@@ -223,10 +264,10 @@ export default function App() {
             // You can add additional config for each field
             // to customize the UI
             fieldConfig={{
-              jenis_kelamin:{
-                inputProps:{
-                  className:"bg-white rounded-lg"
-                }
+              jenis_kelamin: {
+                inputProps: {
+                  className: 'bg-white rounded-lg',
+                },
               },
               acceptTerms: {
                 // You can use JSX in the description
@@ -250,9 +291,13 @@ export default function App() {
             }}
           >
             <button type="submit" className="signIn">
-              {page!=MAX_PAGE?'Selanjutnya':'Simpan'}
+              {page != MAX_PAGE ? 'Selanjutnya' : 'Simpan'}
             </button>
-            <p className={ `text-gray-500 text-sm ${page==MAX_PAGE?'block':'hidden'}`}>
+            <p
+              className={`text-gray-500 text-sm ${
+                page == MAX_PAGE ? 'block' : 'hidden'
+              }`}
+            >
               By submitting this form, you agree to our{' '}
               <a href="#" className="text-primary underline">
                 terms and conditions
@@ -262,6 +307,12 @@ export default function App() {
           </AutoForm>
         )
       })}
+      <Pin
+        className={page == MAX_PAGE ? 'block' : 'hidden'}
+        length={6}
+        page={4}
+        configureNextAction={(value) => console.log(value)}
+      />
     </div>
   )
 }

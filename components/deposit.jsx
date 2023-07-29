@@ -20,7 +20,7 @@ export default function Deposit({ type, task, information, amount }) {
   });
 
   return (
-    <div className="p-2 max-w-md">
+    <div className="p-3 max-w-md border-2  rounded-xl my-5">
       <div className="flex flex-between justify-between items-center w-full flex-wrap">
         <div className="flex space-x-2 ">
           <Image src={data.icon} alt={data.alt} width={32} height={32} />

@@ -26,6 +26,7 @@ export default function App() {
     <div className="__container">
         <Image
           src="/assets/images/piggy-logo.svg"
+          alt="piggy-logo"
           className="mx-auto"
           width={300}
           height={250}
