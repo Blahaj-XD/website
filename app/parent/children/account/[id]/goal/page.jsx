@@ -52,8 +52,8 @@ export default function ChildrenGoalDashboard() {
       <div className="content-wrapper h-full relative z-20">
         <Balance balance={1000000}>
           <div className="flex space-x-2">
-            <Link href="/account/1/goal/create">
-            <button className="p-3 flex items-center rounded-xl text-Secondary-White-1 bg-Secondary-Black-1 space-x-3">
+            <Link href={`/account/${params.id}/request-saldo`}>
+            <button className="p-3 flex flex-items-center rounded-xl text-Secondary-White-1 bg-Secondary-Black-1 space-x-3">
               Request Saldo{' '}
               <Image
                 src="/assets/icons/tambah-saldo.svg"
@@ -63,6 +63,9 @@ export default function ChildrenGoalDashboard() {
                 alt="tambah"
               />
             </button>
+            </Link>
+
+            <Link href={`/account/${params.id}/alokasi-saldo`}>
             <button className="p-3 flex items-center rounded-xl border-2 text-Secondary-Black-1 border-Secondary-Black-1 space-x-2">
               Alokasi Saldo{' '}
               <Image
