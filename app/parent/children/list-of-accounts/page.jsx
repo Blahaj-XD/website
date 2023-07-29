@@ -49,9 +49,11 @@ export default function ListOfChildren() {
           <Skeleton className="rounded-[10px] w-32 h-32 bg-Secondary-Grey-3"></Skeleton>
         )}
         {!isLoading &&
-          data.items.map((item, index) => {
-            return <Children fullName={item['full_name']} key={index} />
-          })}
+          data.items.map((item, index) => (
+            <Link href={`/parent/children/account/${item['id']}/`} key={index}>
+              <Children fullName={item['full_name']} key={index} />
+            </Link>
+          ))}
         <Link href={`/parent/children/register`}>
           <Children name="Tambah" img="/assets/icons/plus.svg" />
         </Link>

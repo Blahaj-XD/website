@@ -1,9 +1,9 @@
 'use client'
 import Navbar from '@components/navbar'
 import AutoForm from '@components/ui/auto-form'
-import Api from '@utils/api'
+import { parentsAdminAddKid } from '@lib/backend/parents-admin/add-kid'
+import { signOut } from 'next-auth/react'
 import { useRouter } from 'next/navigation'
-import React from 'react'
 import * as z from 'zod'
 
 export default function ChildrenRegistration() {
@@ -26,16 +26,31 @@ export default function ChildrenRegistration() {
     tanggal_lahir: z.string({
       required_error: 'Date of birth (tanggal lahir) is required.',
     }),
-
     jenis_kelamin: z.enum(['male', 'female'], {
       required_error: 'Gender (jenis kelamin) is required.',
     }),
   })
 
-  const configureNextAction = (data) => {
-    Api.post('auth/register', formData).then((res) => {
-      console.log('res', res)
+  const configureNextAction = async (data) => {
+    const response = await parentsAdminAddKid({
+      domisili: data.tempat_tanggal_lahir,
+      full_name: data.full_name,
+      jenis_kelamin: data.jenis_kelamin === 'male' ? 0 : 1,
+      nik: data.nik,
+      tanggal_lahir: data.tanggal_lahir,
+      tempat_tanggal_lahir: data.tempat_tanggal_lahir,
+    }).catch(async (err) => {
+      if (err.response?.status === 401 || err.response?.status === 503) {
+        const data = await signOut({ redirect: false, callbackUrl: '/login' })
+        router.push(data.url)
+        return
+      }
     })
+
+    console.log(response)
+    if (response.status === 201) {
+      router.push('/parent/children/list-of-accounts')
+    }
   }
   return (
     <div className="__container">
