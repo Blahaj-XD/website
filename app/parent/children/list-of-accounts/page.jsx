@@ -11,7 +11,7 @@ import useSWR from 'swr'
 const Children = ({ fullName, img }) => {
   const SIZE = 94
   return (
-    <div className="text-center">
+    <div className="w-full h-full text-center">
       <div className="mx-auto overflow-hidden rounded-[10px]">
         {img ? (
           <div className="flex place-content-center w-[94px] h-[94px] bg-Shade-Pinkl">
@@ -44,14 +44,16 @@ export default function ListOfChildren() {
   return (
     <div>
       <Navbar action={() => router.back()} name="List Children" />
-      <div className="wrapper flex flex-wrap py-6 px-12 space-x-5">
+      <div className="container mt-6 grid grid-cols-3 gap-5">
         {isLoading && (
           <Skeleton className="rounded-[10px] w-32 h-32 bg-Secondary-Grey-3"></Skeleton>
         )}
         {!isLoading &&
-          data.items.map((item, index) => {
-            return <Children fullName={item['full_name']} key={index} />
-          })}
+          data.items.map((item, index) => (
+            <Link href={`/parent/children/account/${item['id']}/`} key={index}>
+              <Children fullName={item['full_name']} key={index} />
+            </Link>
+          ))}
         <Link href={`/parent/children/register`}>
           <Children name="Tambah" img="/assets/icons/plus.svg" />
         </Link>
