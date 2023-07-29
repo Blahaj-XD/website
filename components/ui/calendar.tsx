@@ -1,12 +1,12 @@
-import React from "react"
 import {
   createCalendar,
   getLocalTimeZone,
   getWeeksInMonth,
   isToday,
   type CalendarDate,
-} from "@internationalized/date"
-import { ChevronLeft, ChevronRight } from "lucide-react"
+} from '@internationalized/date'
+import { ChevronLeft, ChevronRight } from 'lucide-react'
+import React from 'react'
 import {
   useButton,
   useCalendar,
@@ -15,24 +15,24 @@ import {
   useLocale,
   type AriaCalendarGridProps,
   type DateValue,
-} from "react-aria"
+} from 'react-aria'
 import {
   useCalendarState,
   type CalendarState,
   type CalendarStateOptions,
-} from "react-stately"
+} from 'react-stately'
 
-import { cn } from "@/lib/utils"
+import { cn } from '@lib/utils'
 
-import { Button } from "./button"
-import { DayPicker } from 'react-day-picker';
+import { DayPicker } from 'react-day-picker'
+import { Button } from './button'
 
 /* -------------------------------------------------------------------------------------------------
  * Calendar
  * -----------------------------------------------------------------------------------------------*/
 
 interface CalendarProps<T extends DateValue = DateValue>
-  extends Omit<CalendarStateOptions<T>, "locale" | "createCalendar"> {
+  extends Omit<CalendarStateOptions<T>, 'locale' | 'createCalendar'> {
   locale?: string
 }
 
@@ -44,7 +44,7 @@ export function Calendar(props: CalendarProps) {
 
   return (
     <div {...calendarProps} className="space-y-4">
-        <DayPicker captionLayout="dropdown" fromYear={2015} toYear={2025}>
+      <DayPicker captionLayout="dropdown" fromYear={2015} toYear={2025}>
         <div className="flex items-center justify-between">
           <Button
             {...useButton(prevButtonProps, React.useRef(null)).buttonProps}
@@ -63,9 +63,8 @@ export function Calendar(props: CalendarProps) {
           </Button>
         </div>
         <CalendarGrid state={state} />
-        </DayPicker>
+      </DayPicker>
     </div>
-
   )
 }
 
@@ -144,11 +143,11 @@ function CalendarCell({ state, date }: CalendarCellProps) {
         {...buttonProps}
         ref={ref}
         variant="ghost"
-        className={cn("h-9 w-9 p-0 font-normal aria-selected:opacity-100", {
-          "text-muted-foreground opacity-50": isOutsideVisibleRange,
-          "bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground":
+        className={cn('h-9 w-9 p-0 font-normal aria-selected:opacity-100', {
+          'text-muted-foreground opacity-50': isOutsideVisibleRange,
+          'bg-primary text-primary-foreground hover:bg-primary hover:text-primary-foreground focus:bg-primary focus:text-primary-foreground':
             isSelected,
-          "bg-accent text-accent-foreground": isToday(date, getLocalTimeZone()),
+          'bg-accent text-accent-foreground': isToday(date, getLocalTimeZone()),
         })}
       >
         {formattedDate}

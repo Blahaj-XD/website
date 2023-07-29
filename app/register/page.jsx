@@ -1,10 +1,9 @@
 'use client'
-import AutoForm from '@/components/ui/auto-form'
-import * as z from 'zod'
-import Api from '@/utils/api'
+import Navbar from '@components/navbar'
+import AutoForm from '@components/ui/auto-form'
 import Image from 'next/image'
 import React from 'react'
-import Navbar from '@components/navbar'
+import * as z from 'zod'
 // Define your form schema using zod
 const parentRegistrationSchema = [
   z.object({
@@ -179,7 +178,7 @@ const ScanKTP = ({ configureNextAction, page, className }) => {
   )
 }
 
-import Pin from '@/components/Pin'
+import Pin from '@components/pin'
 
 export default function App() {
   const [page, setPage] = React.useState(4)
@@ -202,8 +201,7 @@ export default function App() {
       // Api.post('auth/register', formData).then((res) => {
       //   console.log('res', res)
       // })
-    }
-    else {
+    } else {
       nextPage()
     }
   }
