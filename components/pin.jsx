@@ -1,6 +1,6 @@
 'use client'
-import PinInput from 'react-pin-input'
 import React from 'react'
+import PinInput from 'react-pin-input'
 
 export default function Pin({ className, length, page, configureNextAction }) {
   const [pin, setPin] = React.useState('')
@@ -44,7 +44,7 @@ export default function Pin({ className, length, page, configureNextAction }) {
           regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
         />
         <button
-          onClick={() => configureNextAction(page, {pin:pin})}
+          onClick={() => configureNextAction(page, { pin: pin })}
           className="signIn"
         >
           Daftar Sekarang

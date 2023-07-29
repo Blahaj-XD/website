@@ -2,6 +2,7 @@
 import Navbar from '@components/navbar'
 import AutoForm from '@components/ui/auto-form'
 import Image from 'next/image'
+import { useRouter } from 'next/navigation'
 import React from 'react'
 import * as z from 'zod'
 // Define your form schema using zod
@@ -19,6 +20,11 @@ const parentRegistrationSchema = [
       })
       .min(2, { message: 'Full name must be at least 2 characters.' })
       .default('28072023'),
+    domisili: z
+      .string({
+        required_error: 'Domisili is required.',
+      })
+      .default('depok'), // Set a default value for domisili
     tanggal_lahir: z
       .string({
         required_error: 'Date of birth (tanggal lahir) is required.',
@@ -32,9 +38,9 @@ const parentRegistrationSchema = [
       .default('male'), // Set a default value for jenis_kelamin
   }),
   z.object({
-    kota: z
+    alamat: z
       .string({
-        required_error: 'City (Kota) is required.',
+        required_error: 'Alamat is required.',
       })
       .default('depok'), // Set a default value for domisili
     rt_rw: z
@@ -78,11 +84,11 @@ const parentRegistrationSchema = [
       .default('john'),
 
     password: z.coerce
-      .number({
+      .string({
         required_error: 'Password is required.',
       })
-      .min(8, { message: 'Password must be at least 8 characters.' })
-      .default(12345678),
+      .min(6, { message: 'Password must be at least 6 characters.' })
+      .default('123456'),
 
     phone_number: z
       .string({
@@ -179,9 +185,11 @@ const ScanKTP = ({ configureNextAction, page, className }) => {
 }
 
 import Pin from '@components/pin'
+import { authRegister } from '@lib/backend/auth/register'
 
 export default function App() {
-  const [page, setPage] = React.useState(4)
+  const router = useRouter()
+  const [page, setPage] = React.useState(0)
   const [showSplashscreen, setShowSplashscreen] = React.useState(false)
   const [formData, setFormData] = React.useState({})
   const MAX_PAGE = 4
@@ -195,13 +203,23 @@ export default function App() {
     setPage((state) => (state + 1 > MAX_PAGE ? MAX_PAGE : state + 1))
   }
 
-  const configureNextAction = (page, data) => {
+  const configureNextAction = async (page, data) => {
     setFormData((state) => ({ ...state, ...data }))
     if (page == MAX_PAGE) {
+      // submit registration
       console.log(formData)
-      // Api.post('auth/register', formData).then((res) => {
-      //   console.log('res', res)
-      // })
+
+      if (formData.jenis_kelamin === 'male') {
+        formData.jenis_kelamin = 0
+      } else {
+        formData.jenis_kelamin = 1
+      }
+
+      const response = await authRegister(formData)
+      if (response.statusCode == 201) {
+        console.log('success')
+        router.push('/login')
+      }
     } else {
       nextPage()
     }
@@ -227,8 +245,9 @@ export default function App() {
                 ? 'block max-w-sm mx-auto border-5 border-sky-500 p-5'
                 : 'hidden'
             }
-            onSubmit={async (data) => {
+            onSubmit={(data) => {
               configureNextAction(page, data)
+              console.log({ data, formData })
             }}
             // Pass the schema to the form
             formSchema={step}

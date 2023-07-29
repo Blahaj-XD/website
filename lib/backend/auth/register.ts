@@ -21,15 +21,26 @@ type AuthRegisterBody = {
 
 type AuthRegisterResponse = {
   user: GenericUser
+  statusCode: number
 }
 
 export async function authRegister(
   body: AuthRegisterBody
 ): Promise<AuthRegisterResponse> {
-  const response = await api.post<AuthRegisterResponse, any, AuthRegisterBody>(
-    `${process.env.NEXT_PUBLIC_BACKEND_API}/auth/register`,
-    body
-  )
+  const response = await api.post<
+    {
+      user: GenericUser
+    },
+    any,
+    AuthRegisterBody
+  >(`${process.env.NEXT_PUBLIC_BACKEND_API}/auth/register`, body, {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  })
 
-  return response.data
+  return {
+    user: response.data,
+    statusCode: response.status,
+  }
 }
