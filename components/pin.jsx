@@ -38,11 +38,15 @@ export default function Pin({ className, length, page, configureNextAction }) {
           inputFocusStyle={{ borderColor: 'blue' }}
           onComplete={(value, index) => {
             setPin(value)
+            console.log(value)
           }}
           autoSelect={true}
           regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
         />
-        <button onClick={() => configureNextAction(page,pin)} className="signIn">
+        <button
+          onClick={() => configureNextAction(page, {pin:pin})}
+          className="signIn"
+        >
           Daftar Sekarang
         </button>
       </div>

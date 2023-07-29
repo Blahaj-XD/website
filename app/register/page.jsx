@@ -5,6 +5,7 @@ import Api from '@/utils/api'
 import Image from 'next/image'
 import React from 'react'
 import Navbar from '@components/navbar'
+import SimulasiVerifikasi from '@components/simulasi-verifikasi'
 // Define your form schema using zod
 const parentRegistrationSchema = [
   z.object({
@@ -183,6 +184,7 @@ import Pin from '@/components/Pin'
 
 export default function App() {
   const [page, setPage] = React.useState(4)
+  const [showSplashscreen, setShowSplashscreen] = React.useState(false)
   const [formData, setFormData] = React.useState({})
   const MAX_PAGE = 4
   const MIN_PAGE = 0
@@ -202,8 +204,9 @@ export default function App() {
       // Api.post('auth/register', formData).then((res) => {
       //   console.log('res', res)
       // })
-    }
-    else {
+      //trigger the dialogue
+      setShowSplashscreen(true)
+    } else {
       nextPage()
     }
   }
@@ -285,6 +288,16 @@ export default function App() {
         page={4}
         configureNextAction={configureNextAction}
       />
+      {showSplashscreen && (
+        <SimulasiVerifikasi
+          buttonText="Show Dialog"
+          waitingText="Waiting for loading to complete..."
+          finishedText="Loading completed!"
+          ctaAction={() => console.log('Continue action')}
+          cta="Continue"
+          onCloseDialog={handleCloseSplashscreen}
+        />
+      )}
     </div>
   )
 }
