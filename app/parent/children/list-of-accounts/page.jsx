@@ -1,55 +1,45 @@
 'use client'
 import Navbar from '@components/navbar'
+import { Skeleton } from '@components/ui/skeleton'
+import { fetcher } from '@utils/api'
 import Avatar from 'boring-avatars'
-import Image from 'next/image'
 import Link from 'next/link'
 import { useRouter } from 'next/navigation'
-import React from 'react'
-const fetcher = (url) => Axios.get(url).then((r) => r.json())
+import useSWR from 'swr'
 
-const Children = ({ name, img }) => {
-  const SIZE = 40
+const Children = ({ fullName, img }) => {
+  const SIZE = 94
   return (
     <div className="bg-white rounded-lg text-center">
-      <div className="mx-auto">
-        {img ? (
-          <Image
-            src={img}
-            alt="plus"
-            className="p-5 rounded-xl"
-            width={SIZE}
-            height={SIZE}
-          />
-        ) : (
-          <Avatar
-            size={SIZE}
-            name="Maria Mitchell"
-            variant="marble"
-            colors={['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90']}
-          />
-        )}
+      <div className="mx-auto rounded-[10px]">
+        <Avatar
+          size={SIZE}
+          name={fullName}
+          variant="beam"
+          colors={['#92A1C6', '#146A7C', '#F0AB3D', '#C271B4', '#C20D90']}
+          square
+        />
       </div>
-      <h3 className="text-lg font-semibold">{name}</h3>
+      <h3 className="text-lg font-semibold">{fullName}</h3>
     </div>
   )
 }
 export default function ListOfChildren() {
   const router = useRouter()
-  // const {data,error} = SWR('',fetcher)
-  //lakukan logic
-  const data = [
-    {
-      id: 1,
-      name: 'Aldi',
-    },
-  ]
+  const { data, error, isLoading } = useSWR('/parent-admin/kids/', fetcher)
+  console.log(data)
+
   return (
     <div className="">
       <Navbar action={() => router.back()} name="List Children" />
       <div className="wrapper flex flex-wrap p-2 space-x-5">
-        {data.map((element, index) => {
-          return <Children {...element} key={index} />
-        })}
+        {isLoading && (
+          <Skeleton className="rounded-[10px] w-32 h-32 bg-Secondary-Grey-3"></Skeleton>
+        )}
+        {!isLoading &&
+          data.items.map((item, index) => {
+            return <Children fullName={item['full_name']} key={index} />
+          })}
         <Link href={`/parent/children/register`}>
           <Children name="Tambah" img="/assets/icons/plus.svg" />
         </Link>
