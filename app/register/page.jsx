@@ -283,7 +283,7 @@ export default function App() {
         className={page == MAX_PAGE ? 'block' : 'hidden'}
         length={6}
         page={4}
-        configureNextAction={(value) => console.log(value)}
+        configureNextAction={configureNextAction}
       />
     </div>
   )

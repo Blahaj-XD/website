@@ -1,7 +1,7 @@
 import React from 'react'
 import Balance from '@/components/balance'
 import Image from 'next/image'
-import Lihat_lainnya from '@components/lihat-lainnya'
+import Lihat_lainnya from '@components/lihat_lainnya'
 import Deposit from '@components/deposit'
 
 export default function ChildrenDashboard() {

@@ -16,7 +16,7 @@ export default function Spashscreen({ waitingText, finishedText }) {
     <div className="w-screen h-screen flex items-center justify-center bg-white">
       {loading ? (
         <div className="flex flex-col items-center">
-          <Image src="/assets/icons/logo.svg" width={200} height={200} />
+          <Image src="/assets/images/splash" width={200} height={200} />
           <h3>{waitingText}</h3>
         </div>
       ) : (
