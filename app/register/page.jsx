@@ -179,43 +179,13 @@ const ScanKTP = ({ configureNextAction, page, className }) => {
   )
 }
 
-import PinInput from 'react-pin-input';
-const Pin = ({ className, length, page, configureNextAction }) => {
-  const value = React.useRef('')
-  return (
-    <div className={className}>
-      <h1>Silahkan buat pin untuk rekening anda</h1>
-      <p>Tolong Masukan pin</p>
-      <div className="container">
-        <PinInput
-          length={length}
-          initialValue=""
-          secret
-          secretDelay={100}
-          onChange={(value, index) => {}}
-          type="numeric"
-          inputMode="number"
-          style={{padding: '5px'}}
-          inputStyle={{borderColor: 'red'}}
-          inputFocusStyle={{borderColor: 'blue'}}
-          onComplete={(value, index) => value.currentValue}
-          autoSelect={true}
-          regexCriteria={/^[ A-Za-z0-9_@./#&+-]*$/}
-        />
-        <button onClick={configureNextAction(page,value)} className="signIn">Daftar Sekarang</button>
-      </div>
-    </div>
-  );
-};
+import Pin from '@/components/Pin'
 
 export default function App() {
-  const [page, setPage] = React.useState(0)
+  const [page, setPage] = React.useState(4)
   const [formData, setFormData] = React.useState({})
   const MAX_PAGE = 4
   const MIN_PAGE = 0
-  React.useEffect(() => {
-    console.log(page)
-  }, [page])
 
   const prevPage = () => {
     setPage((state) => (state - 1 < MIN_PAGE ? MIN_PAGE : state - 1))
@@ -228,10 +198,12 @@ export default function App() {
   const configureNextAction = (page, data) => {
     setFormData((state) => ({ ...state, ...data }))
     if (page == MAX_PAGE) {
-      Api.post('auth/register', formData).then((res) => {
-        console.log('res', res)
-      })
-    } else {
+      console.log(formData)
+      // Api.post('auth/register', formData).then((res) => {
+      //   console.log('res', res)
+      // })
+    }
+    else {
       nextPage()
     }
   }

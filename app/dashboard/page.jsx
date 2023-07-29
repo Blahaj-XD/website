@@ -1,7 +1,7 @@
 'use client'
 import useSWR from 'swr'
 import Diagram from '@/components/diagram'
-import DragDropFile from '@components/dragDropFile'
+import DragDropFile from '@components/dragDropile'
 
 function fetcher(){
   return fetch('/api/dashboard').then(res => res.json())

@@ -1,7 +1,7 @@
 import React from 'react'
 import Balance from '@/components/balance'
 import Image from 'next/image'
-import Lihat_lainnya from '@/components/lihat_lainnya'
+import Lihat_lainnya from '@components/lihat-lainnya'
 import Deposit from '@components/deposit'
 
 export default function ParentDashboard() {
@@ -59,12 +59,12 @@ export default function ParentDashboard() {
       </div>
       <div className="content-wrapper h-full relative z-20">
         <Balance balance={1000000}>
-        <div className="flex space-x-2">
+          <div className="flex space-x-2">
             <button className="p-3 flex items-center rounded-xl text-Secondary-White-1 bg-Secondary-Black-1 space-x-3">
               Tambah Saldo{' '}
               <Image
                 src="/assets/icons/tambah-saldo.svg"
-                className='-mb-1'
+                className="-mb-1"
                 width={28}
                 height={28}
                 alt="tambah"
@@ -74,7 +74,7 @@ export default function ParentDashboard() {
               Penarikan Saldo{' '}
               <Image
                 src="/assets/icons/tarik-saldo.svg"
-                className='-mb-1'
+                className="-mb-1"
                 width={28}
                 height={28}
                 alt="kirim"
@@ -85,7 +85,7 @@ export default function ParentDashboard() {
         <div className="container  relative bg-white h-1/2 pt-5 pb-5 pb-16 rounded-t-2xl z-50 overflow-y-auto">
           <div className="flex justify-between">
             <h3>Aktivitas</h3>
-            <Lihat_lainnya className="relative"deposits={deposits} />
+            <Lihat_lainnya className="relative" deposits={deposits} />
           </div>
           {deposits.map((deposit, index) => (
             <Deposit key={index} {...deposit} />
