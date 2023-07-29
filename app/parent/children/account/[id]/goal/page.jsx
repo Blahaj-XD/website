@@ -1,8 +1,6 @@
 'use client'
 
 import Balance from '@components/balance'
-import Deposit from '@components/deposit'
-import Lihat_lainnya from '@components/lihat_lainnya'
 import Image from 'next/image'
 import React from 'react'
 import Link from 'next/link'
@@ -24,20 +22,87 @@ import { useParams } from 'next/navigation'
 // 	EndDate       time.Time `json:"end_date"`
 // 	CreatedAt     time.Time `json:"created_at"`
 
-const Goal = ({ Title, tanggal_tengat, status, balance, target }) => {
+const NoGoals = () => {
   return (
-    <div className="flex flex-row items-center flex-nowrap space-x-2 shadow-lg p-2 rounded-2xl bg-white"></div>
+    <div className="w-screen h-screen flex justify-content">
+      <div className="bg-Secondary-White-1 p-5 w-64 h-72 mx-auto text-center border-2 shadow-xl space-y-3">
+        <Image src="/assets/images/piggy/quest.svg" alt="noQuest" width={144} height={144} className="mx-auto" />
+        <h4 className="text-center">Kamu belum punya goals. Ayo buat sekarang</h4>
+        <Link href="/parent/quest/create">
+          <Image src="/assets/icons/plus.svg" alt="addQuest" width={32} height={32} className="bg-Shade-Pinkl p-2 mx-auto"/>
+        </Link>
+      </div>
+    </div>
+  );
+};
+const GoalItem = ({ title, status, user,target,balance }) => {
+  return (
+    <div className="mx-2 px-5 py-8 mt-5 rounded-xl border-2 shadow-lg">
+      <div className="header flex items-center justify-between space-x-2">
+        <div className="flex space-x-2">
+          <Image
+            src="/assets/icons/target.svg"
+            alt="target"
+            width={40}
+            height={40}
+          />
+          <div className="flex-col">
+            <h3 className="text-md font-medium">{title}</h3>
+            <p className="text-sm">Sudah mencapai target - {user}</p>
+          </div>
+        </div>
+        <div
+          className={`status p-2 bg-${
+            status === 'Pending' ? 'Shade-Pinkl' : 'Primary-Green'
+          }`}
+        >
+          {status}
+        </div>
+      </div>
+      <div className="flex w-full my-2 items-center justify-between">
+          <h3 className="text-lg text-Shade-Pinkl">Rp: {balance}</h3>
+          <h4 className="text-sm text-Secondary-Grey-2"> Target Rp:{target}</h4>
+      </div>
+      <div className="slider"></div>
+      <div className="flex mt-2 space-x-2">
+        <button className="bg-white border-2 px-3 py-2 rounded-xl w-full">
+          Batalkan
+        </button>
+        <button className="bg-Shade-Pinkl text-white px-3 py-2 rounded-xl w-full">
+          Tabung
+        </button>
+      </div>
+    </div>
   )
 }
+
+const Goals = ({ data }) => {
+  return data.map((elem, index) => (
+    <GoalItem
+      key={index}
+      {...elem}
+    />
+  ))
+}
+
+
 export default function ChildrenGoalDashboard() {
   const params = useParams()
-  const deposits = [
+  const goals=[
     {
-      type: 'goal',
-      task: 'Top up roblox',
-      target: 'Monthly income',
-      amount: 2500,
+      title:'Night Party',
+      status:'On Going',
+      name:'name',
+      target:100000,
+      balance:50000
     },
+    {
+      title:'Night Party',
+      status:'Pending',
+      name:'name',
+      target:100000,
+      balance:50000
+    }
   ]
 
   return (
@@ -83,12 +148,11 @@ export default function ChildrenGoalDashboard() {
           <div className="flex justify-between">
             <h3 className="font-bold text-lg">Goals</h3>
 
-            {/* <Lihat_lainnya className="relative" deposits={deposits} /> */}
+            <Link href={`/parent/children/account/${params.id}/goal-detail`}>Lihat lainnya</Link>
           </div>
           <div className="overflow-y-auto h-screen">
             { /* <Goal/> */}
-
-
+            {goals.length > 0 ? (<NoGoals/>):(<Goals/>)}
           </div>
         </div>
       </div>
