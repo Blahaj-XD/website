@@ -9,6 +9,7 @@ export default function Spashscreen({ waitingText, finishedText }) {
         setLoading(false)
       }, 4000)
     }
+    loadingSimulation()
   }, [])
 
   return (
