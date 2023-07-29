@@ -1,46 +1,42 @@
+'use client'
+
 import Balance from '@components/balance'
 import Deposit from '@components/deposit'
 import Lihat_lainnya from '@components/lihat_lainnya'
 import Image from 'next/image'
 import React from 'react'
+import Link from 'next/link'
+import { useParams } from 'next/navigation'
 
-export default function ChildrenDashboard() {
+// KidID        int       `json:"kid_id"`
+// 	ParentID     int       `json:"parent_id"`
+// 	Title        string    `json:"title"`
+// 	TargetAmount float64   `json:"target_amount"`
+// 	EndDate      time.Time `json:"end_date"
+
+// ID            int       `json:"id"`
+// 	KidID         int       `json:"kid_id"`
+// 	AccountNumber string    `json:"account_number"`
+// 	Title         string    `json:"title"`
+// 	TargetAmount  float64   `json:"target_amount"`
+// 	Status        string    `json:"status"`
+// 	StartDate     time.Time `json:"start_date"`
+// 	EndDate       time.Time `json:"end_date"`
+// 	CreatedAt     time.Time `json:"created_at"`
+
+const Goal = ({ Title, tanggal_tengat, status, balance, target }) => {
+  return (
+    <div className="flex flex-row items-center flex-nowrap space-x-2 shadow-lg p-2 rounded-2xl bg-white"></div>
+  )
+}
+export default function ChildrenGoalDashboard() {
+  const params = useParams()
   const deposits = [
     {
-      type: 'in',
-      task: 'Salary',
-      information: 'Monthly income',
+      type: 'goal',
+      task: 'Top up roblox',
+      target: 'Monthly income',
       amount: 2500,
-    },
-    {
-      type: 'out',
-      task: 'Shopping',
-      information: 'Groceries',
-      amount: 150,
-    },
-    {
-      type: 'in',
-      task: 'Bonus',
-      information: 'Year-end bonus',
-      amount: 1000,
-    },
-    {
-      type: 'in',
-      task: 'Bonus',
-      information: 'Year-end bonus',
-      amount: 1000,
-    },
-    {
-      type: 'in',
-      task: 'Bonus',
-      information: 'Year-end bonus',
-      amount: 1000,
-    },
-    {
-      type: 'in',
-      task: 'Bonus',
-      information: 'Year-end bonus',
-      amount: 1000,
     },
   ]
 
@@ -53,44 +49,43 @@ export default function ChildrenDashboard() {
         width={300}
         className="absolute top-0 left-0 w-full z-0"
       />
-      <div className="container header relative flex justify-between rounded-b-lg z-10 mt-10">
-        <h1 className="text-2xl text-white">Hi, Oppie</h1>
-        <Image width={45} height={45} src="/assets/icons/user.svg" alt="user" />
-      </div>
       <div className="content-wrapper h-full relative z-20">
         <Balance balance={1000000}>
-          <div className="flex flex-row items-center flex-nowrap space-x-2 shadow-lg p-2 rounded-2xl bg-white">
-            <div className="flex items-center space-x-2">
+          <div className="flex space-x-2">
+            <Link href="/account/1/goal/create">
+            <button className="p-3 flex items-center rounded-xl text-Secondary-White-1 bg-Secondary-Black-1 space-x-3">
+              Request Saldo{' '}
               <Image
-                width={45}
-                height={45}
-                src="/assets/images/piggy/mission.svg"
-                alt="user"
+                src="/assets/icons/tambah-saldo.svg"
+                className="-mb-1"
+                width={28}
+                height={28}
+                alt="tambah"
               />
-              <div className="flex flex-col">
-                <h5 className="text-2xs">Kerjakan Quest Sekarang</h5>
-                <h4 className="text-xs">Untuk Mendapatkan Uang!</h4>
-                <h3></h3>
-              </div>
-            </div>
-            <Image
-              width={30}
-              height={30}
-              src="/assets/icons/view-task.svg"
-              alt="user"
-              className="mt-2"
-            />
+            </button>
+            <button className="p-3 flex items-center rounded-xl border-2 text-Secondary-Black-1 border-Secondary-Black-1 space-x-2">
+              Alokasi Saldo{' '}
+              <Image
+                src="/assets/icons/tarik-saldo.svg"
+                className="-mb-1"
+                width={28}
+                height={28}
+                alt="kirim"
+              />
+            </button>
+            </Link>
           </div>
         </Balance>
         <div className="container relative bg-white h-1/2 mt-5 pt-5 pb-16 rounded-t-2xl z-50">
           <div className="flex justify-between">
-            <h3>Aktivitas</h3>
-            <Lihat_lainnya className="relative" deposits={deposits} />
+            <h3 className="font-bold text-lg">Goals</h3>
+
+            {/* <Lihat_lainnya className="relative" deposits={deposits} /> */}
           </div>
-          <div className="overflow-y-auto">
-            {deposits.map((deposit, index) => (
-              <Deposit key={index} {...deposit} />
-            ))}
+          <div className="overflow-y-auto h-screen">
+            { /* <Goal/> */}
+
+
           </div>
         </div>
       </div>

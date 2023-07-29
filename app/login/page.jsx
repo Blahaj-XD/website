@@ -33,7 +33,7 @@ export default function App() {
   return (
     <div className="__container">
       <Image
-        src="/assets/images/piggy-logo.svg"
+        src="/assets/images/piggy/logo.svg"
         alt="piggy-logo"
         className="mx-auto"
         width={300}

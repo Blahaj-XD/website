@@ -1,14 +1,16 @@
-import { useRouter } from 'next/router'
+
+'use client'
+import { useRouter } from 'next/navigation'
 import Navbar from '@components/navbar'
+import React from 'react'
 import * as z from 'zod'
 import AutoForm from '@components/ui/auto-form'
 import Image from 'next/image'
 export default function TambahSaldo() {
   const router = useRouter()
   const data = z.object({
-    jumlah_saldo: z.string(),
+    jumlah_saldo: z.string()
   })
-
   const provider = React.useMemo(() => {
     return [
       {
