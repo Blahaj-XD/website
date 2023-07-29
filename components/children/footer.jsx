@@ -15,19 +15,19 @@ export default function Footer() {
       label: 'Home',
     },
     {
-      href: `/parent/children/account/${params.id}`,
+      href: `/parent/children/account/${params.id}/money`,
       icon: '/assets/icons/footer/parent/money.svg',
       icon_active: '/assets/icons/footer/parent/money-active.svg',
       label: 'Money',
     },
     {
-      href: `/parent/children/account/${params.id}`,
+      href: `/parent/children/account/${params.id}/learning`,
       icon: '/assets/icons/footer/parent/book.svg',
       icon_active: '/assets/icons/footer/parent/book-active.svg',
       label: 'Learning',
     },
     {
-      href: `/parent/children/account/${params.id}`,
+      href: `/parent/children/account/${params.id}/quest-list`,
       icon: '/assets/icons/footer/quest.svg',
       icon_active: '/assets/icons/footer/quest-active.svg',
       label: 'Quests',

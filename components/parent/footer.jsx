@@ -11,7 +11,7 @@ export default function Footer() {
       label: 'Home',
     },
     {
-      href: `/parent/`,
+      href: `/parent/approval`,
       icon: '/assets/icons/footer/children/approval.svg',
       icon_active: '/assets/icons/footer/children/approval-active.svg',
       label: 'Approval',
@@ -23,7 +23,7 @@ export default function Footer() {
       label: 'Anak-anak',
     },
     {
-      href: `/parent/`,
+      href: `/parent/quest`,
       icon: '/assets/icons/footer/quest.svg',
       icon_active: '/assets/icons/footer/quest-active.svg',
       label: 'Quests',

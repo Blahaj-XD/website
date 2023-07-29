@@ -1,7 +1,6 @@
 import React from 'react'
 import Balance from '@/components/balance'
 import Image from 'next/image'
-import Lihat_lainnya from '@components/lihat_lainnya'
 import Deposit from '@components/deposit'
 
 export default function QuestList() {
@@ -57,10 +56,6 @@ export default function QuestList() {
           </div>
         </Balance>
         <div className="container relative bg-white h-1/2 mt-5 pt-5 pb-16 rounded-t-2xl z-50">
-          <div className="flex justify-between">
-            <h3>Aktivitas</h3>
-            <Lihat_lainnya className="relative" deposits={deposits} />
-          </div>
           <div className="overflow-y-auto">
             {deposits.map((deposit, index) => (
               <Deposit key={index} {...deposit} />
