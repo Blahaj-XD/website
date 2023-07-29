@@ -1,5 +1,5 @@
 'use client'
-import { alokasiSaldo } from '../goalSchema'
+import { alokasiSaldo } from '../goal/goalSchema'
 import * as z from 'zod'
 import Image from 'next/image'
 import Navbar from '@/components/navbar'
