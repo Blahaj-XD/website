@@ -52,6 +52,21 @@ export default function TabNavigation() {
 
   const [activeTab, setActiveTab] = React.useState('Diambil')
 
+
+  const nextAction = (key,buttonCTA) => {
+    if(buttonCTA === 'Diambil'){
+      //post ke backend untuk selesaikan berdasarkan key
+      //api.push('',)
+      //key berupa id
+    }
+    else{
+      //post ke backend untuk mengambil data berdasarkan key
+      //api.push('',)
+      //key berupa id
+    }
+  }
+
+
   const renderTabs = () => {
     return variants.map((tabData) => (
       <TabsTrigger
@@ -91,14 +106,14 @@ export default function TabNavigation() {
         <CardContent className="space-5-2">
           {activeData.map((item, index) => (
             <div
-              className="flex justify-center w-full space-x-2 my-3 p-1 rounded-xl"
+              className="flex justify-between  w-full space-x-2 my-3 p-1 rounded-xl"
               key={index}
             >
               <div className="flex-col">
                 <h4>{item.judul_quest}</h4>
                 <h5>Hadiah: Rp. {item.hadiah}</h5>
                 <h5>Waktu: {item.tengat_waktu_tanggal}</h5>
-                <button className="signIn py-0.5">{buttonCTA}</button>
+                <button className="signIn py-0.5" onClick={nextAction(key,buttonCTA)}>{buttonCTA}</button>
               </div>
               <img
                 src="/assets/images/splashScreen/flyingPiggy.png"
