@@ -1,8 +1,8 @@
-import React from 'react'
-import Balance from '@/components/balance'
-import Image from 'next/image'
-import Lihat_lainnya from '@components/lihat_lainnya'
+import Balance from '@components/balance'
 import Deposit from '@components/deposit'
+import Lihat_lainnya from '@components/lihat_lainnya'
+import Image from 'next/image'
+import React from 'react'
 
 export default function ChildrenDashboard() {
   const deposits = [

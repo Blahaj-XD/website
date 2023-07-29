@@ -1,10 +1,10 @@
 'use client'
-import AutoForm from '@/components/ui/auto-form'
-import * as z from 'zod'
-import Api from '@/utils/api'
-import React from 'react'
 import Navbar from '@components/navbar'
+import AutoForm from '@components/ui/auto-form'
+import Api from '@utils/api'
 import { useRouter } from 'next/navigation'
+import React from 'react'
+import * as z from 'zod'
 
 export default function ChildrenRegistration() {
   const router = useRouter()
@@ -39,49 +39,49 @@ export default function ChildrenRegistration() {
   }
   return (
     <div className="__container">
-    <Navbar action={()=>router.back()} name="Add Children" />
-    <AutoForm
-      className="block max-w-sm mx-auto border-5 border-sky-500 p-5"
-      onSubmit={async (data) => {
-        configureNextAction(data)
-      }}
-      // Pass the schema to the form
-      formSchema={kidAccountSchema}
-      // You can add additional config for each field
-      // to customize the UI
-      fieldConfig={{
-        acceptTerms: {
-          // You can use JSX in the description
-          description: (
-            <>
-              I agree to the{' '}
-              <a
-                href="#"
-                className="text-primary underline"
-                onClick={(e) => {
-                  e.preventDefault()
-                  alert('Terms and conditions clicked.')
-                }}
-              >
-                terms and conditions
-              </a>
-              .
-            </>
-          ),
-        },
-      }}
-    >
-      <button type="submit" className="signIn">
-        Simpan
-      </button>
-      <p className="text-gray-500 text-sm">
-        By submitting this form, you agree to our{' '}
-        <a href="#" className="text-primary underline">
-          terms and conditions
-        </a>
-        .
-      </p>
-    </AutoForm>
+      <Navbar action={() => router.back()} name="Add Children" />
+      <AutoForm
+        className="block max-w-sm mx-auto border-5 border-sky-500 p-5"
+        onSubmit={async (data) => {
+          configureNextAction(data)
+        }}
+        // Pass the schema to the form
+        formSchema={kidAccountSchema}
+        // You can add additional config for each field
+        // to customize the UI
+        fieldConfig={{
+          acceptTerms: {
+            // You can use JSX in the description
+            description: (
+              <>
+                I agree to the{' '}
+                <a
+                  href="#"
+                  className="text-primary underline"
+                  onClick={(e) => {
+                    e.preventDefault()
+                    alert('Terms and conditions clicked.')
+                  }}
+                >
+                  terms and conditions
+                </a>
+                .
+              </>
+            ),
+          },
+        }}
+      >
+        <button type="submit" className="signIn">
+          Simpan
+        </button>
+        <p className="text-gray-500 text-sm">
+          By submitting this form, you agree to our{' '}
+          <a href="#" className="text-primary underline">
+            terms and conditions
+          </a>
+          .
+        </p>
+      </AutoForm>
     </div>
   )
 }

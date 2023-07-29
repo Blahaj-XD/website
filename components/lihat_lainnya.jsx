@@ -1,7 +1,7 @@
 'use client'
 
+import Deposit from '@components/deposit'
 import { Drawer } from 'vaul'
-import Deposit from '@/components/deposit'
 export default function MyDrawer({ deposits }) {
   return (
     <Drawer.Root shouldScaleBackground>
@@ -18,9 +18,23 @@ export default function MyDrawer({ deposits }) {
                 History Transaksi
               </Drawer.Title>
               <div className="space-y-4">
-                {deposits.map((deposit, index) => {
-                  return <Deposit key={index} {...deposit} />
-                })}
+                {deposits.items.map((transaction, index) => (
+                  <Deposit
+                    key={index}
+                    amount={transaction.amount}
+                    task={
+                      transaction.kid_name === '-'
+                        ? 'Top Up'
+                        : transaction.kid_name
+                    }
+                    information={''}
+                    type={
+                      transaction['transaction_type'] === 'Transfer In'
+                        ? 'in'
+                        : 'out'
+                    }
+                  />
+                ))}
               </div>
             </div>
           </div>

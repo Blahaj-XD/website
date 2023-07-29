@@ -1,16 +1,18 @@
 'use client'
-import AutoForm, { AutoFormSubmit } from '@/components/ui/auto-form'
-import * as z from 'zod'
+import AutoForm from '@components/ui/auto-form'
+import { signIn, useSession } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
-import Api from '@/utils/api'
+import { redirect } from 'next/navigation'
+import * as z from 'zod'
+
 // Define your form schema using zod
 const parentAccountSchema = z.object({
   username: z
     .string({
       required_error: 'Username is required.',
     })
-    .min(2, { message: 'Username must be at least 2 characters.' })
+    .min(1, { message: 'Username must be at least 2 characters.' })
     .default('john'),
 
   password: z.coerce
@@ -22,29 +24,32 @@ const parentAccountSchema = z.object({
 })
 
 export default function App() {
+  const { status, data } = useSession()
+  if (status === 'authenticated') {
+    redirect('/parent')
+  }
+  console.log({ status, data })
+
   return (
     <div className="__container">
-        <Image
-          src="/assets/images/piggy-logo.svg"
-          alt="piggy-logo"
-          className="mx-auto"
-          width={300}
-          height={250}
-        />
+      <Image
+        src="/assets/images/piggy-logo.svg"
+        alt="piggy-logo"
+        className="mx-auto"
+        width={300}
+        height={250}
+      />
       <div className="ml-5">
         <h1 className="text-xl font-bold">Welcome to Piggy Bank!</h1>
         <p className="text-lg">Please sign in to continue.</p>
       </div>
       <AutoForm
         onSubmit={async (data) => {
-          try {
-            const result = await Api.post('auth/login', data)
-            console.log(result)
-          } catch (err) {
-            console.log(err)
-          }
-          // Do something with the data
-          // Data is validated and coerced with zod automatically
+          await signIn('credentials', {
+            username: data.username,
+            password: data.password,
+            redirect: false,
+          })
         }}
         // Pass the schema to the form
         className="max-w-md border-5 border-sky-500 p-5"
@@ -62,12 +67,19 @@ export default function App() {
           },
         }}
       >
-        <button type="submit" className="signIn">
+        <button
+          type="submit"
+          className="signIn"
+          disabled={status === 'loading'}
+        >
           Sign In
         </button>
       </AutoForm>
       <p className="text-center max-w-md">
-        Belum punya akun? <Link href="/register" className="text-Shade-Pinkl">Daftar Disini</Link>
+        Belum punya akun?{' '}
+        <Link href="/register" className="text-Shade-Pinkl">
+          Daftar Disini
+        </Link>
       </p>
     </div>
   )
