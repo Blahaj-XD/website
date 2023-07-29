@@ -44,7 +44,7 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" href="/assets/images/website-icon.svg" />
       </head>
-      <body className="w-screen mx-auto overflow-x-hidden">
+      <body className="w-screen mx-auto overflow-x-hidden text-Secondary-Black-1">
         <NextAuthProvider>{children}</NextAuthProvider>
       </body>
     </html>
