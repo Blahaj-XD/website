@@ -20,11 +20,20 @@ export const Activity = () => {
   } = useSWR('/parent-admin/bank/transactions', fetcher, {
     onError: async (error) => {
       if (error.response && error.response.status === 404) {
+        console.log('EMPTY!!')
         setEmpty(true)
+        return
       }
       if (error.response && error.response.status === 503) {
         await signOut()
       }
+    },
+    onErrorRetry: (error, key, config, revalidate, { retryCount }) => {
+      if (error.status === 404) {
+        setEmpty(true)
+        return
+      }
+      if (retryCount >= 3) return
     },
     onSuccess: (data) => {
       if (data.items.length === 0) {
@@ -36,7 +45,7 @@ export const Activity = () => {
   })
   return (
     <>
-      {empty && (
+      {empty && parentBankTransactionsIsLoading && (
         <div className="container relative bg-Secondary-White-1 h-screen pt-8 pb-5 rounded-t-[30px] z-50 overflow-y-auto">
           <div className="flex justify-between">
             <h3 className="font-bold text-xl">Aktivitas</h3>
@@ -46,6 +55,17 @@ export const Activity = () => {
           <Skeleton className="p-3 max-w-md h-16 bg-Secondary-Grey-3 rounded-xl my-5"></Skeleton>
           <Skeleton className="p-3 max-w-md h-16 bg-Secondary-Grey-3 rounded-xl my-5"></Skeleton>
           <Skeleton className="p-3 max-w-md h-16 bg-Secondary-Grey-3 rounded-xl my-5"></Skeleton>
+        </div>
+      )}
+      {empty && (
+        <div className="container relative bg-Secondary-White-1 h-screen pt-8 pb-5 rounded-t-[30px] z-50 overflow-y-auto">
+          <div className="flex justify-between">
+            <h3 className="font-bold text-xl">Aktivitas</h3>
+            <p className="text-lg font-bold text-Shade-Pinkl">Lihat Lainnya</p>
+          </div>
+          <h1 className="text-xl font-bold text-center mt-10">
+            Tidak ada aktivitas
+          </h1>
         </div>
       )}
       {!empty &&
