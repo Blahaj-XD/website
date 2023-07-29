@@ -113,7 +113,7 @@ export default function TabNavigation() {
                 <h4>{item.judul_quest}</h4>
                 <h5>Hadiah: Rp. {item.hadiah}</h5>
                 <h5>Waktu: {item.tengat_waktu_tanggal}</h5>
-                <button className="signIn py-0.5" onClick={nextAction(key,buttonCTA)}>{buttonCTA}</button>
+                <button className="signIn py-0.5" onClick={nextAction(index,buttonCTA)}>{buttonCTA}</button>
               </div>
               <img
                 src="/assets/images/splashScreen/flyingPiggy.png"
