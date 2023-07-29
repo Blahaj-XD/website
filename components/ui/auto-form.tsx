@@ -424,15 +424,15 @@ function AutoFormEnum({
         {isRequired && <span className="text-destructive"> *</span>}
       </FormLabel>
       <FormControl>
-        <Select onValueChange={field.onChange} defaultValue={field.value}>
+        <Select onValueChange={field.onChange} defaultValue={field.value} >
           <SelectTrigger>
-            <SelectValue className="w-full">
+            <SelectValue className="w-full ">
               {field.value ?? "Select an option"}
             </SelectValue>
           </SelectTrigger>
           <SelectContent>
             {values.map((value: any) => (
-              <SelectItem value={value} key={value}>
+              <SelectItem value={value} key={value} >
                 {value}
               </SelectItem>
             ))}

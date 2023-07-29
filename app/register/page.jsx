@@ -4,6 +4,7 @@ import * as z from 'zod'
 import Api from '@/utils/api'
 import Image from 'next/image'
 import React from 'react'
+import Navbar from '@components/navbar'
 // Define your form schema using zod
 const parentRegistrationSchema = [
   z.object({
@@ -100,7 +101,7 @@ const parentRegistrationSchema = [
   }),
 ]
 
-const ScanKTP = ({ configureNextAction, page }) => {
+const ScanKTP = ({ configureNextAction, page, className }) => {
   const fileInputRef = React.useRef(null)
   const [fileUploaded, setFileUpload] = React.useState('')
   const handleFileButtonClick = () => {
@@ -119,8 +120,9 @@ const ScanKTP = ({ configureNextAction, page }) => {
     const formData = new FormData()
     formData.append('file', fileUploaded)
     try {
-      const data = await Api.post(``, fetchKTPdata)
+      // const data = await Api.post(``, fetchKTPdata)
       //throw a toast
+      const data = {}
       await configureNextAction(page, data)
     } catch (err) {
       //throw a toast
@@ -128,7 +130,7 @@ const ScanKTP = ({ configureNextAction, page }) => {
     }
   }
   return (
-    <div>
+    <div className={className}>
       {/* Hidden file input */}
       <input
         type="file"
@@ -139,19 +141,19 @@ const ScanKTP = ({ configureNextAction, page }) => {
 
       {/* Custom button */}
       <div
-        className="upload relative border-dashed border-2 border-Primary-Pink-1 block cursor-pointer w-64 h-[80vh]"
+        className="upload relative border-dashed border-2 border-Primary-Pink-1 block cursor-pointer full h-[80vh] mx-auto my-5"
         onClick={handleFileButtonClick}
       >
         <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 select-none">
           {!fileUploaded ? (
             <div>
-              {/* <Image src="" alt="" /> */}
-              <h4>Unggah Foto KTP Anda Disini</h4>
-              <h6>Maksimal ukuran file 10MB</h6>
+              <Image src="/assets/icons/ktpIcon.svg" width={42} height={32} alt="ktp" className="mx-auto" />
+              <h4 className="whitespace-nowrap text-sm text-center">Unggah Foto KTP Anda Disini</h4>
+              <h6 className="whitespace-nowrap text-2xs text-center">Maksimal ukuran file 10MB</h6>
             </div>
           ) : (
             <div>
-              <h4>Foto berhasil diunggah</h4>
+              <h4 className="whitespace-nowrap font-bold">Foto berhasil diunggah</h4>
             </div>
           )}
         </div>
@@ -193,16 +195,14 @@ export default function App() {
     }
   }
   return (
-    <>
-      <nav>
-        <span onClick={prevPage}>Back</span> Registration Form
-      </nav>
+    <div className="__container">
+      <Navbar action={prevPage} name="Registration Page" />
       <ScanKTP
         configureNextAction={configureNextAction}
         page={page}
         className={
           page == 0
-            ? 'block max-w-sm mx-auto border-5 border-sky-500 p-5'
+            ? 'container block max-w-sm mx-auto border-5 border-sky-500 p-5'
             : 'hidden'
         }
       />
@@ -223,6 +223,11 @@ export default function App() {
             // You can add additional config for each field
             // to customize the UI
             fieldConfig={{
+              jenis_kelamin:{
+                inputProps:{
+                  className:"bg-white rounded-lg"
+                }
+              },
               acceptTerms: {
                 // You can use JSX in the description
                 description: (
@@ -245,9 +250,9 @@ export default function App() {
             }}
           >
             <button type="submit" className="signIn">
-              Send now
+              {page!=MAX_PAGE?'Selanjutnya':'Simpan'}
             </button>
-            <p className="text-gray-500 text-sm">
+            <p className={ `text-gray-500 text-sm ${page==MAX_PAGE?'block':'hidden'}`}>
               By submitting this form, you agree to our{' '}
               <a href="#" className="text-primary underline">
                 terms and conditions
@@ -257,6 +262,6 @@ export default function App() {
           </AutoForm>
         )
       })}
-    </>
+    </div>
   )
 }

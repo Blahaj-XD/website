@@ -3,7 +3,12 @@ import AutoForm from '@/components/ui/auto-form'
 import * as z from 'zod'
 import Api from '@/utils/api'
 import React from 'react'
+import Navbar from '@components/navbar'
+import { useRouter } from 'next/navigation'
+
 export default function ChildrenRegistration() {
+  const router = useRouter()
+
   const kidAccountSchema = z.object({
     nik: z
       .string({
@@ -26,12 +31,15 @@ export default function ChildrenRegistration() {
       required_error: 'Gender (jenis kelamin) is required.',
     }),
   })
+
   const configureNextAction = (data) => {
     Api.post('auth/register', formData).then((res) => {
       console.log('res', res)
     })
   }
   return (
+    <div className="__container">
+    <Navbar action={()=>router.back()} name="Add Children" />
     <AutoForm
       className="block max-w-sm mx-auto border-5 border-sky-500 p-5"
       onSubmit={async (data) => {
@@ -74,5 +82,6 @@ export default function ChildrenRegistration() {
         .
       </p>
     </AutoForm>
+    </div>
   )
 }

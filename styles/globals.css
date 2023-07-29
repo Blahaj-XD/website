@@ -33,7 +33,12 @@
   border-color: #d1d5db;
   color:black;
 }
-
+.__dashboard-background{
+  background-image: url("../public/assets/images/parent-dashboard-background.png");
+  height: '100vh';
+  background-repeat: 'no-repeat';
+  background-size: 'cover';
+}
 @layer utilities{
   .signIn {
     @apply bg-Shade-Pinkl px-5 py-2 text-white font-bold w-full; /* Fixed the class name, removed the "l" in "Pinkl" */
@@ -41,6 +46,9 @@
 
   /* Fixed hover style */
   .signIn:hover {
-    @apply bg-Primary-Dark-Pink px-5 py-2 text-white font-bold w-full; /* Fixed the class name, replaced "/" with "-" */
+    @apply bg-Primary-Dark-Pink px-5 py-2 text-white font-bold w-full ; /* Fixed the class name, replaced "/" with "-" */
+  }
+  .__container{
+    @apply max-w-md mx-auto py-2 mb-5;
   }
 }
