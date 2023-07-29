@@ -6,6 +6,7 @@ import { Skeleton } from '@components/ui/skeleton'
 import { fetcher } from '@utils/api'
 import { signOut, useSession } from 'next-auth/react'
 import Image from 'next/image'
+import Link from 'next/link'
 import { redirect } from 'next/navigation'
 import { useState } from 'react'
 import useSWR from 'swr'
@@ -165,16 +166,18 @@ export default function ParentDashboard() {
           }
         >
           <div className="flex space-x-2">
-            <button className="p-3 flex items-center rounded-xl text-Secondary-White-1 bg-Secondary-Black-1 space-x-3">
-              Tambah Saldo{' '}
-              <Image
-                src="/assets/icons/tambah-saldo.svg"
-                className="-mb-1"
-                width={28}
-                height={28}
-                alt="tambah"
-              />
-            </button>
+            <Link href="/parent/add-saldo">
+              <button className="p-3 flex items-center rounded-xl text-Secondary-White-1 bg-Secondary-Black-1 space-x-3">
+                Tambah Saldo{' '}
+                <Image
+                  src="/assets/icons/tambah-saldo.svg"
+                  className="-mb-1"
+                  width={28}
+                  height={28}
+                  alt="tambah"
+                />
+              </button>
+            </Link>
             <button className="p-3 flex items-center rounded-xl border-2 text-Secondary-Black-1 border-Secondary-Black-1 space-x-2">
               Penarikan Saldo{' '}
               <Image

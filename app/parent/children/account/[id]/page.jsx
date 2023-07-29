@@ -1,48 +1,69 @@
+'use client'
+
 import Balance from '@components/balance'
 import Deposit from '@components/deposit'
-import Lihat_lainnya from '@components/lihat_lainnya'
+import api, { fetcher } from '@utils/api'
+import { signOut } from 'next-auth/react'
 import Image from 'next/image'
-import React from 'react'
+import { useRouter } from 'next/navigation'
+import { useEffect } from 'react'
+import useSWR from 'swr'
 
-export default function ChildrenDashboard() {
-  const deposits = [
+export default function ChildrenDashboard({ params }) {
+  const router = useRouter()
+  const kidID = params.id
+  // const [transactions, setTransactions] = useState([])
+
+  const { data: kid, isLoading: kidLoading } = useSWR(
+    `/kids/${kidID}/dashboard/bank/`,
+    fetcher,
     {
-      type: 'in',
-      task: 'Salary',
-      information: 'Monthly income',
-      amount: 2500,
-    },
+      onError: async (error) => {
+        if (error.response && error.response.status === 503) {
+          await signOut({ redirect: false })
+          router.push('/login')
+        }
+      },
+    }
+  )
+  const { data: transactions, isLoading: transactionLoading } = useSWR(
+    `/kids/${kidID}/dashboard/bank/transactions/`,
+    fetcher,
     {
-      type: 'out',
-      task: 'Shopping',
-      information: 'Groceries',
-      amount: 150,
-    },
-    {
-      type: 'in',
-      task: 'Bonus',
-      information: 'Year-end bonus',
-      amount: 1000,
-    },
-    {
-      type: 'in',
-      task: 'Bonus',
-      information: 'Year-end bonus',
-      amount: 1000,
-    },
-    {
-      type: 'in',
-      task: 'Bonus',
-      information: 'Year-end bonus',
-      amount: 1000,
-    },
-    {
-      type: 'in',
-      task: 'Bonus',
-      information: 'Year-end bonus',
-      amount: 1000,
-    },
-  ]
+      onError: async (error) => {
+        if (error.response && error.response.status === 503) {
+          await signOut({ redirect: false })
+          router.push('/login')
+        }
+      },
+    }
+  )
+
+  useEffect(() => {
+    // api.get(`/kids/${kidID}/dashboard/bank/`).then((res) => {
+    //   setKid(res.data)
+    // })
+    // api.get(`/kids/${kidID}/dashboard/bank/transactions`).then((res) => {
+    //   setTransactions(res.data.items)
+    // })
+
+    api
+      .get('/auth/verify')
+      .then(async (res) => {
+        if (res.status === 500) {
+          await signOut({ redirect: false })
+          router.push('/login')
+        } else {
+          res.data.verified ? null : router.push('/login')
+        }
+      })
+      .catch(async (err) => {
+        if (err.response.status === 401 || err.response.status === 500) {
+          await signOut({ redirect: false })
+          router.push('/login')
+        }
+      })
+  }, [kidID])
 
   return (
     <div className="__container relative">
@@ -54,11 +75,13 @@ export default function ChildrenDashboard() {
         className="absolute top-0 left-0 w-full z-0"
       />
       <div className="container header relative flex justify-between rounded-b-lg z-10 mt-10">
-        <h1 className="text-2xl text-white">Hi, Oppie</h1>
+        <h1 className="text-2xl text-white">
+          {kidLoading ? '...' : `Hi ${kid.user.full_name}`}
+        </h1>
         <Image width={45} height={45} src="/assets/icons/user.svg" alt="user" />
       </div>
       <div className="content-wrapper h-full relative z-20">
-        <Balance balance={1000000}>
+        <Balance balance={kidLoading ? 0 : kid.balance}>
           <div className="flex flex-row items-center flex-nowrap space-x-2 shadow-lg p-2 rounded-2xl bg-white">
             <div className="flex items-center space-x-2">
               <Image
@@ -85,12 +108,23 @@ export default function ChildrenDashboard() {
         <div className="container relative bg-white h-1/2 mt-5 pt-5 pb-16 rounded-t-2xl z-50">
           <div className="flex justify-between">
             <h3>Aktivitas</h3>
-            <Lihat_lainnya className="relative" deposits={deposits} />
+            {/* <Lihat_lainnya className="relative" deposits={transactions} /> */}
           </div>
           <div className="overflow-y-auto">
-            {deposits.map((deposit, index) => (
-              <Deposit key={index} {...deposit} />
-            ))}
+            {!transactionLoading &&
+              transactions.items.map((transaction, index) => (
+                <Deposit
+                  key={index}
+                  amount={transaction.amount}
+                  task={transaction['transaction_type']}
+                  information={''}
+                  type={
+                    transaction['transaction_type'] === 'Transfer In'
+                      ? 'in'
+                      : 'out'
+                  }
+                />
+              ))}
           </div>
         </div>
       </div>

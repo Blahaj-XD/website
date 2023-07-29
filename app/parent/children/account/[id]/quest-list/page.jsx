@@ -1,15 +1,14 @@
-import React from 'react'
-import Balance from '@/components/balance'
-import Image from 'next/image'
 import Profile from '@/components/profile'
 import Tabs from '@/components/tabs'
+import Image from 'next/image'
 export default function QuestList() {
   const user = {
     name: 'Oppie',
     balance: 1000,
     quest_done: 3,
   }
-  const data = [
+
+  const dummy = [
     {
       id: 1,
       title: 'Diambil',
@@ -91,7 +90,7 @@ export default function QuestList() {
       </Profile>
 
       <div className="content-wrapper h-screen relative z-20 bg-white rounded-xl pt-5">
-        <Tabs data={data} className="mx-auto" />
+        <Tabs data={dummy} className="mx-auto" />
       </div>
     </div>
   )
